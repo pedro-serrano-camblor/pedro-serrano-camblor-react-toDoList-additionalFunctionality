@@ -91,7 +91,7 @@ const Home = () => {
   function clearWithConfirm(listName) {
     if (
       window.confirm(
-        "Are you sure you want to clear the list? You won't be able to recover them: Yes ; No"
+        "Are you sure you want to clear the list? (You won't be able to recover them)"
       )
     ) {
       if (listName === "scheduled") setScheduledTasks([]);
