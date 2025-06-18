@@ -9,7 +9,7 @@ const Home = () => {
 	//Declarar estados
 	const [newTask, setNewTask] = useState("")
 	const [tasks, setTasks] = useState([])
-	const [taskCounter, setTaskCounter] = useState(0)
+	/* const [taskRemover, setTaskRemover] = useState(0) */
 
 	//Funciones para manejar estados
 
@@ -18,19 +18,19 @@ const Home = () => {
 		if (event.key === "Enter") {
 			//agregar tarea a la lista de tareas
 
-			setTasks(tasks.concat(newTask))
+			setTasks(tasks.concat(newTask));
 			setNewTask("");
+
 
 		}
 		//event.preventDefault()
 
 	}
-	console.log(tasks);
 
-
-
-
-
+	function removeTask(id) {
+		/* alert("Funciona"+id) */
+		setTasks(tasks.filter((_, index) => index !== id))
+	}
 
 
 	return (
@@ -42,19 +42,42 @@ const Home = () => {
 			<div className="container">
 
 				{/* Input */}
-				<input type="text" placeholder="texto aqui" value={newTask} onChange={(event) => setNewTask(event.target.value)} onKeyDown={addTask} />
+				<div className="row">
+					<div className="col-3"></div>
+					<input className="col-6"
+						type="text"
+						placeholder="texto aqui"
+						value={newTask}
+						onChange={(event) => setNewTask(event.target.value)}
+						onKeyDown={addTask} />
+					<div className="col-3"></div>
+				</div>
 
 				{/* Lista */}
 
-				<ul>
-					{tasks.map((task, index) => <li key={index}>{task}</li>)}
-				</ul>
+				<div className="row">
+					<div className="col-3"></div>
+					<ul className="col-6 list-group">
+						{/* Añadir que al hacer hover sobre el li, aparezca el botón de "eliminar" */}
+						{tasks.map((task, index) =>
+							<li key={index} className="list-group-item d-flex align-items-center border border-2 py-1 my-1">
+								<span>{task}</span>
+
+								<div className="ms-auto d-flex gap-2">
+									<button className="btn btn-sm btn-danger" onClick={() => removeTask(index)}>X</button>
+								</div>
+							</li>
+						)}
+
+					</ul></div>
+				<div className="col-3"></div>
+
 
 
 
 				{/* Contador de elementos en la lista */}
 				<p>
-					Elementos en la lista
+					{`${tasks.length} items left`}
 				</p>
 			</div>
 		</div>
